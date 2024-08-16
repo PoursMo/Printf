@@ -1,12 +1,11 @@
-#include <stdarg.h>
-#include "libft.h"
+#include "ft_printf.h"
 
-static void show_pointer(va_list lst_ptr, int *count)
+static void	show_pointer(va_list lst_ptr, int *count)
 {
-	unsigned long address;
+	unsigned long	address;
 
 	address = (unsigned long)va_arg(lst_ptr, void *);
-	if(address)
+	if (address)
 	{
 		*count += ft_putstr("0x");
 		*count += ft_putstr(ft_conv_to_base(address, "0123456789abcdef"));
@@ -15,7 +14,7 @@ static void show_pointer(va_list lst_ptr, int *count)
 		*count += ft_putstr("(nil)");
 }
 
-static void call_func(char arg, va_list lst_ptr, int *count)
+static void	call_func(char arg, va_list lst_ptr, int *count)
 {
 	if (arg == '%')
 		*count += ft_putchar(arg) != -1;
@@ -37,8 +36,8 @@ static void call_func(char arg, va_list lst_ptr, int *count)
 
 int	ft_printf(const char *format, ...)
 {
-	int count;
-	va_list lst_ptr;
+	int		count;
+	va_list	lst_ptr;
 
 	va_start(lst_ptr, format);
 	count = 0;

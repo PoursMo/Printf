@@ -2,13 +2,13 @@ CC = gcc
 FLAGS = -Wextra -Wall -Werror
 SOURCES = *.c
 OBJS = $(SOURCES:.c=.o)
-NAME = libft.a
+NAME = libftprintf.a
 RM = rm -f
 
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(FLAGS) -c $^
+	$(CC) $(FLAGS) -c $^ -I../libft/ ../libft/libft.a
 
 $(NAME): $(OBJS)
 	@ar rcs $@ $(OBJS)
