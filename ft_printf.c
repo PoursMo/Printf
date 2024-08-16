@@ -8,7 +8,7 @@ static void	show_pointer(va_list lst_ptr, int *count)
 	if (address)
 	{
 		*count += ft_putstr("0x");
-		*count += ft_putstr(ft_conv_to_base(address, "0123456789abcdef"));
+		*count += ft_putnbr_base(address, "0123456789abcdef");
 	}
 	else
 		*count += ft_putstr("(nil)");
@@ -23,9 +23,9 @@ static void	call_func(char arg, va_list lst_ptr, int *count)
 	else if (arg == 'u')
 		*count += ft_putnbr(va_arg(lst_ptr, unsigned int));
 	else if (arg == 'x')
-		*count += ft_putstr(ft_conv_to_base(va_arg(lst_ptr, unsigned int), "0123456789abcdef"));
+		*count += ft_putnbr_base(va_arg(lst_ptr, unsigned int), "0123456789abcdef");
 	else if (arg == 'X')
-		*count += ft_putstr(ft_conv_to_base(va_arg(lst_ptr, unsigned int), "0123456789ABCDEF"));
+		*count += ft_putnbr_base(va_arg(lst_ptr, unsigned int), "0123456789ABCDEF");
 	else if (arg == 's')
 		*count += ft_putstr(va_arg(lst_ptr, char *));
 	else if (arg == 'c')
