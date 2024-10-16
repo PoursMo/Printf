@@ -1,35 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aloubry <aloubry@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/04 15:16:58 by aloubry           #+#    #+#             */
+/*   Updated: 2024/10/07 11:11:47 by aloubry          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static void	show_pointer(va_list lst_ptr, int *count)
 {
-	unsigned long	address;
+	uint64_t	address;
 
-	address = (unsigned long)va_arg(lst_ptr, void *);
+	address = (uint64_t)va_arg(lst_ptr, void *);
 	if (address)
 	{
 		*count += ft_putstr("0x");
-		*count += ft_putnbr_base(address, "0123456789abcdef");
+		*count += putulong_base(address, "0123456789abcdef");
 	}
 	else
-		*count += ft_putstr("(nil)");
+		*count += ft_putstr("0x0");
 }
 
 static void	call_func(char arg, va_list lst_ptr, int *count)
 {
 	if (arg == '%')
-		*count += ft_putchar(arg) != -1;
+		*count += ft_putchar(arg);
 	else if (arg == 'd' || arg == 'i')
-		*count += ft_putnbr(va_arg(lst_ptr, int));
+		*count += ft_putint(va_arg(lst_ptr, int));
 	else if (arg == 'u')
-		*count += ft_putnbr(va_arg(lst_ptr, unsigned int));
+		*count += ft_putuint(va_arg(lst_ptr, uint32_t));
 	else if (arg == 'x')
-		*count += ft_putnbr_base(va_arg(lst_ptr, unsigned int), "0123456789abcdef");
+		*count += putulong_base(va_arg(lst_ptr, uint32_t), "0123456789abcdef");
 	else if (arg == 'X')
-		*count += ft_putnbr_base(va_arg(lst_ptr, unsigned int), "0123456789ABCDEF");
+		*count += putulong_base(va_arg(lst_ptr, uint32_t), "0123456789ABCDEF");
 	else if (arg == 's')
 		*count += ft_putstr(va_arg(lst_ptr, char *));
 	else if (arg == 'c')
-		*count += ft_putchar(va_arg(lst_ptr, int)) != -1;
+		*count += ft_putchar(va_arg(lst_ptr, int));
 	else if (arg == 'p')
 		show_pointer(lst_ptr, count);
 }
@@ -44,7 +56,7 @@ int	ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if (*format != '%')
-			count += ft_putchar(*format) != -1;
+			count += ft_putchar(*format);
 		else
 		{
 			call_func(*(format + 1), lst_ptr, &count);
